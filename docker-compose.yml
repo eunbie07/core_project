@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   node:
-    build: ./node-backend
+    build: ./backend-node
     ports:
       - "3000:3000"
     volumes:
@@ -16,7 +16,7 @@ services:
       - mongo
 
   fastapi:
-    build: ./fastapi-backend
+    build: ./backend-fastapi
     ports:
       - "8000:8000"
     environment:
