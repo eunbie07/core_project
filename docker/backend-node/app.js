@@ -3,9 +3,9 @@ const path = require('path');
 const axios = require('axios');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8000;
 
-const FASTAPI_URL = 'http://fastapi:8000';
+const FASTAPI_URL = 'http://fastapi:3000';
 
 app.use(express.static(path.join(__dirname, '../frontend')));
 
