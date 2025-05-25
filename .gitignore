@@ -79,3 +79,5 @@ test/project/mongosh-2.0.2-linux-x64/
 
 test/project/mongosh-2.0.2-linux-x64/bin/mongosh
 test/project/mongosh-2.0.2-linux-x64/bin/mongosh_crypt_v1.so
+
+test/project/mongosh-2.0.2-linux-x64/
