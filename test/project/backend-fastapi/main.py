@@ -1,19 +1,16 @@
 from fastapi import FastAPI
+from routers import summary
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 로컬 테스트만 허용
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-class Message(BaseModel):
-    message: str
-
-@app.post("/api/chat")
-def chat(msg: Message):
-    return {"reply": f"'{msg.message}'는 꼭 필요한 소비였나요?"}
+app.include_router(summary.router)
+app.mount("/static", StaticFiles(directory="static"), name="static")
