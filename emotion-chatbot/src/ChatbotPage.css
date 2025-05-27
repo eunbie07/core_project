@@ -1,0 +1,159 @@
+/* EmotionChatbotPage.css */
+body {
+  margin: 0;
+  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  background: #f8f6fc;
+  color: #1f2937;
+}
+
+.page-container {
+  padding: 0;
+}
+
+.topbar {
+  background: #ece8fc;
+  padding: 20px 40px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #5b21b6;
+  font-weight: 600;
+  border-bottom: 2px solid #ddd6fe;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding: 40px;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 24px;
+}
+
+.analysis-card .bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.bar {
+  background: #ddd6fe;
+  color: #4c1d95;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.bar-1 { background: #c4b5fd; }
+.bar-2 { background: #a5b4fc; }
+.bar-3 { background: #bfdbfe; }
+
+.insight {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.robot {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.robot img {
+  width: 60px;
+}
+
+.chatbox {
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 16px;
+  height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.chat-message {
+  margin-bottom: 10px;
+}
+
+.chat-message.user {
+  text-align: right;
+}
+
+.chat-message .bubble {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 20px;
+  max-width: 70%;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.chat-message.bot .bubble {
+  background: #e5e7eb;
+  color: #111827;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-message.user .bubble {
+  background: #7c3aed;
+  color: #ffffff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.chat-input button {
+  padding: 10px 16px;
+  background: #7c3aed;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.diary-card .entry {
+  margin-bottom: 12px;
+}
+
+.diary-card .memo {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin: 10px 0;
+}
+
+.entry-img {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.share-btn {
+  background: #ec4899;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}
