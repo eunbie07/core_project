@@ -1,0 +1,387 @@
+[
+  {
+    "date": "2025-05-01",
+    "type": "income",
+    "category": "월급",
+    "amount": "3,000,000원",
+    "description": "2025-05월 월급 (세후)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,773원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "교통",
+    "amount": "3,096원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,557원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-03",
+    "type": "expense",
+    "category": "외식",
+    "amount": "36,415원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-03",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "7,500원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-04",
+    "type": "expense",
+    "category": "외식",
+    "amount": "49,594원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-04",
+    "type": "expense",
+    "category": "외식",
+    "amount": "45,899원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-04",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "9,464원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-05",
+    "type": "expense",
+    "category": "고정비",
+    "amount": "1,200,000원",
+    "description": "렌트·관리비·통신비 등 고정비"
+  },
+  {
+    "date": "2025-05-05",
+    "type": "expense",
+    "category": "외식",
+    "amount": "39,344원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-05",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "6,676원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-06",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "6,678원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-06",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,438원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-06",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,517원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-08",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,680원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-10",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,891원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-10",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "100,063원",
+    "description": "28살 직장인의 쇼핑 지출 (기준 80,000원)"
+  },
+  {
+    "date": "2025-05-10",
+    "type": "expense",
+    "category": "문화/예술",
+    "amount": "43,186원",
+    "description": "28살 직장인의 문화/예술 지출 (기준 35,000원)"
+  },
+  {
+    "date": "2025-05-12",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "8,754원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-12",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "7,300원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-12",
+    "type": "expense",
+    "category": "교통",
+    "amount": "3,410원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-13",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,502원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-14",
+    "type": "expense",
+    "category": "외식",
+    "amount": "40,743원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-14",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,803원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-14",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "83,105원",
+    "description": "28살 직장인의 쇼핑 지출 (기준 80,000원)"
+  },
+  {
+    "date": "2025-05-14",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "99,075원",
+    "description": "28살 직장인의 쇼핑 지출 (기준 80,000원)"
+  },
+  {
+    "date": "2025-05-15",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,674원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-16",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "8,188원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-16",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,933원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-17",
+    "type": "expense",
+    "category": "외식",
+    "amount": "51,337원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-17",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,425원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-18",
+    "type": "expense",
+    "category": "교통",
+    "amount": "3,348원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "6,474원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "교통",
+    "amount": "3,432원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "81,041원",
+    "description": "28살 직장인의 쇼핑 지출 (기준 80,000원)"
+  },
+  {
+    "date": "2025-05-20",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "6,678원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-21",
+    "type": "expense",
+    "category": "외식",
+    "amount": "50,934원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-21",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "9,512원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-22",
+    "type": "expense",
+    "category": "외식",
+    "amount": "35,190원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-22",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "6,614원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-22",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,585원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-22",
+    "type": "expense",
+    "category": "문화/예술",
+    "amount": "41,714원",
+    "description": "28살 직장인의 문화/예술 지출 (기준 35,000원)"
+  },
+  {
+    "date": "2025-05-23",
+    "type": "expense",
+    "category": "외식",
+    "amount": "39,689원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-23",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "8,346원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-23",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "7,925원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-24",
+    "type": "expense",
+    "category": "문화/예술",
+    "amount": "43,126원",
+    "description": "28살 직장인의 문화/예술 지출 (기준 35,000원)"
+  },
+  {
+    "date": "2025-05-26",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "75,097원",
+    "description": "28살 직장인의 쇼핑 지출 (기준 80,000원)"
+  },
+  {
+    "date": "2025-05-27",
+    "type": "expense",
+    "category": "외식",
+    "amount": "51,012원",
+    "description": "28살 직장인의 외식 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-27",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "8,783원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-28",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,381원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-28",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,335원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-29",
+    "type": "expense",
+    "category": "카페/음료",
+    "amount": "7,637원",
+    "description": "28살 직장인의 카페/음료 지출 (기준 7,000원)"
+  },
+  {
+    "date": "2025-05-29",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,486원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  },
+  {
+    "date": "2025-05-30",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,396원",
+    "description": "28살 직장인의 교통 지출 (기준 2,500원)"
+  }
+]

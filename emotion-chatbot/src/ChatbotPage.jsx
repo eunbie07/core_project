@@ -1,72 +1,53 @@
 import React, { useState } from 'react';
 import './ChatbotPage.css';
+import diaryImage from './chatbot_image_3.png';
 
-export default function EmotionChatbotPage() {
-  const [messages, setMessages] = useState([
-    { role: 'bot', text: '안녕하세요! 오늘 소비하신 이유를 함께 나눠볼까요?' },
-  ]);
-  const [input, setInput] = useState('');
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const newMessages = [
-      ...messages,
-      { role: 'user', text: input },
-      { role: 'bot', text: '감정에 따른 소비 같아요. 조금 더 이야기해볼까요?' },
-    ];
-    setMessages(newMessages);
-    setInput('');
-  };
+export default function DiaryLandingPage() {
+  const [isRegister, setIsRegister] = useState(false);
 
   return (
-    <div className="page-container">
-      <header className="topbar">
-        <h1>💸 감정소비 리마인더 - 마음이</h1>
-      </header>
+    <div className="diary-container">
+      <div className="left-panel">
+        <h1>감정소비 다이어리</h1>
+        <p>오늘의 소비와 감정을 기록하고 돌아볼 수 있는 나만의 감정소비 일기장</p>
+        <img src={diaryImage} alt="다이어리 일러스트" />
+      </div>
 
-      <main className="dashboard">
-        {/* 분석 카드 */}
-        <section className="card analysis-card">
-          <h2>📊 감정 소비 분석</h2>
-          <div className="bars">
-            <div className="bar bar-1"><span>우울 65%</span></div>
-            <div className="bar bar-2"><span>불안 40%</span></div>
-            <div className="bar bar-3"><span>기쁨 30%</span></div>
-          </div>
-          <p className="insight">최근 우울할 때 소비가 자주 발생하고 있어요.</p>
-        </section>
+      <div className="right-panel">
+        <div className="tab-buttons">
+          <button onClick={() => setIsRegister(false)} className={!isRegister ? 'active' : ''}>로그인</button>
+          <button onClick={() => setIsRegister(true)} className={isRegister ? 'active' : ''}>회원가입</button>
+        </div>
 
-        {/* 챗봇 카드 */}
-        <section className="card chatbot-card">
-          <h2>🤖 마음이 챗봇</h2>
-          <div className="chatbox">
-            {messages.map((msg, i) => (
-              <div key={i} className={`chat-message ${msg.role}`}>
-                <span className="bubble">{msg.text}</span>
-              </div>
-            ))}
-          </div>
-          <div className="chat-input">
-            <input
-              value={input}
-              onChange={e => setInput(e.target.value)}
-              placeholder="오늘 소비한 이유는?"
-            />
-            <button onClick={handleSend}>전송</button>
-          </div>
-        </section>
+        {!isRegister ? <LoginForm /> : <RegisterForm />}
+        <button className="start-btn">시작하기</button>
+      </div>
+    </div>
+  );
+}
 
-        {/* 소비 일기 카드 */}
-        <section className="card diary-card">
-          <h2>📔 소비 일기</h2>
-          <div className="entry">
-            <p>감정: 😢 우울</p>
-            <p>소비 이유: 스트레스를 풀기 위해</p>
-            <p className="memo">오늘은 기분 전환을 위해 평소보다 많은 돈을 썼어요.</p>
-          </div>
-          <button className="share-btn">일기 공유하기</button>
-        </section>
-      </main>
+function LoginForm() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  return (
+    <div className="form">
+      <input type="text" placeholder="아이디" value={username} onChange={e => setUsername(e.target.value)} />
+      <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} />
+    </div>
+  );
+}
+
+function RegisterForm() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  return (
+    <div className="form">
+      <input type="text" placeholder="이름" value={name} onChange={e => setName(e.target.value)} />
+      <input type="email" placeholder="이메일" value={email} onChange={e => setEmail(e.target.value)} />
+      <input type="text" placeholder="아이디" value={username} onChange={e => setUsername(e.target.value)} />
+      <input type="password" placeholder="비밀번호" value={password} onChange={e => setPassword(e.target.value)} />
     </div>
   );
 }

@@ -1,0 +1,275 @@
+[
+  {
+    "date": "2025-05-01",
+    "type": "income",
+    "category": "월급",
+    "amount": "2,000,000원",
+    "description": "2025-05월 월급 (세후)"
+  },
+  {
+    "date": "2025-05-01",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "47,739원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-01",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,461원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "43,953원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "39,333원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,341원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-02",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,476원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-04",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "48,330원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-04",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,196원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-05",
+    "type": "expense",
+    "category": "고정비",
+    "amount": "1,000,000원",
+    "description": "렌트·관리비·통신비 등 고정비"
+  },
+  {
+    "date": "2025-05-05",
+    "type": "expense",
+    "category": "취미/생활",
+    "amount": "30,745원",
+    "description": "45살 주부의 취미/생활 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-07",
+    "type": "expense",
+    "category": "공공서비스",
+    "amount": "137,776원",
+    "description": "45살 주부의 공공서비스 지출 (기준 100,000원)"
+  },
+  {
+    "date": "2025-05-07",
+    "type": "expense",
+    "category": "교통",
+    "amount": "1,885원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-07",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "75,820원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-08",
+    "type": "expense",
+    "category": "공공서비스",
+    "amount": "109,138원",
+    "description": "45살 주부의 공공서비스 지출 (기준 100,000원)"
+  },
+  {
+    "date": "2025-05-10",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,135원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-10",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "71,387원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-11",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "39,726원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-12",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "42,870원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-14",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "39,427원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-16",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "54,455원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-18",
+    "type": "expense",
+    "category": "취미/생활",
+    "amount": "38,034원",
+    "description": "45살 주부의 취미/생활 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "56,010원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "91,041원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-19",
+    "type": "expense",
+    "category": "취미/생활",
+    "amount": "30,714원",
+    "description": "45살 주부의 취미/생활 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-22",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,517원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-23",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,686원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-25",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "44,221원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-25",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,698원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-25",
+    "type": "expense",
+    "category": "교통",
+    "amount": "2,136원",
+    "description": "45살 주부의 교통 지출 (기준 2,000원)"
+  },
+  {
+    "date": "2025-05-26",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "94,341원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-27",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "53,423원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-27",
+    "type": "expense",
+    "category": "공공서비스",
+    "amount": "107,855원",
+    "description": "45살 주부의 공공서비스 지출 (기준 100,000원)"
+  },
+  {
+    "date": "2025-05-27",
+    "type": "expense",
+    "category": "취미/생활",
+    "amount": "39,262원",
+    "description": "45살 주부의 취미/생활 지출 (기준 30,000원)"
+  },
+  {
+    "date": "2025-05-28",
+    "type": "expense",
+    "category": "식료품",
+    "amount": "53,687원",
+    "description": "45살 주부의 식료품 지출 (기준 40,000원)"
+  },
+  {
+    "date": "2025-05-28",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "78,277원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-30",
+    "type": "expense",
+    "category": "공공서비스",
+    "amount": "136,512원",
+    "description": "45살 주부의 공공서비스 지출 (기준 100,000원)"
+  },
+  {
+    "date": "2025-05-30",
+    "type": "expense",
+    "category": "쇼핑",
+    "amount": "70,261원",
+    "description": "45살 주부의 쇼핑 지출 (기준 70,000원)"
+  },
+  {
+    "date": "2025-05-31",
+    "type": "expense",
+    "category": "취미/생활",
+    "amount": "29,476원",
+    "description": "45살 주부의 취미/생활 지출 (기준 30,000원)"
+  }
+]
