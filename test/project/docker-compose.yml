@@ -1,0 +1,42 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    volumes:
+      - mongo-data:/data/db
+
+  fastapi-backend:
+    build: ./fastapi-backend
+    container_name: fastapi-backend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./fastapi-backend/.env
+    depends_on:
+      - mongo
+    restart: always
+
+  node-backend:
+    build: ./node-backend
+    container_name: node-backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - fastapi-backend
+    restart: always
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - node-backend
+    restart: always
+
+volumes:
+  mongo-data:
