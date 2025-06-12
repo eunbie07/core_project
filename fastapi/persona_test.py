@@ -9,39 +9,33 @@ import pandas as pd
 from pathlib import Path
 import uvicorn
 
-# ── 프로젝트 경로 설정 ──
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 
-# ── CSV 로드 & 보정계수 매핑 (utf-8) ──
 region_df = pd.read_csv(DATA_DIR / '지역별_소비자물가지수.csv', encoding='utf-8')
 cpi_region = {row['시도별']: row['2025.05'] / 100 for _, row in region_df.iterrows()}
 item_df = pd.read_csv(DATA_DIR / '지역별_품목별_물가지수.csv', encoding='utf-8')
 cpi_item = {(row['시도별'], row['품목별']): row['2025.05'] / 100 for _, row in item_df.iterrows()}
 
-# ── 헬퍼: 랜덤 날짜 생성 ──
 def random_date_in_month(year: int, month: int) -> str:
     day = random.randint(1, calendar.monthrange(year, month)[1])
     return f"{year:04d}-{month:02d}-{day:02d}"
 
-# ── Pydantic 모델 ──
 class Transaction(BaseModel):
     date: str
     type: str
     category: str
-    amount: str        # 예: "31,200원"
-    description: str   # 상세 정보
+    amount: str     
+    description: str   
 
-# ── 페르소나 모델 ──
 class Persona(BaseModel):
     gender:       str
     age:          str
     location:     str
     month_income: int
     income_level: int
-    life_stage:   str  # 학생/직장인/주부 등
+    life_stage:   str  
 
-# ── 생애 단계별 소비 패턴 ──
 stage_profiles = {
     "직장인": [
         {"name":"외식","avg_count":10,"avg_amount":30000},
@@ -66,7 +60,6 @@ stage_profiles = {
     ]
 }
 
-# ── 거래 생성 로직 ──
 def generate_transactions(
     gender: str, age: str, location: str,
     month_income: int, income_level: int, life_stage: str,
@@ -77,7 +70,6 @@ def generate_transactions(
     fixed_ratio, variable_ratio = ratios.get(income_level, (0.4,0.6))
     inc = month_income
 
-    # 해당 life_stage의 카테고리 프로필
     categories = stage_profiles.get(life_stage, stage_profiles['직장인'])
 
     txns: List[Transaction] = []
@@ -86,7 +78,6 @@ def generate_transactions(
         y, m = cur.year, cur.month
         ym = f"{y:04d}-{m:02d}"
 
-        # 수입
         amt_str = f"{inc:,}원"
         txns.append(Transaction(
             date=f"{ym}-01",
@@ -95,7 +86,7 @@ def generate_transactions(
             amount=amt_str,
             description=f"{ym}월 월급 (세후)"
         ))
-        # 고정비
+
         fixed_amt = int(inc * fixed_ratio)
         amt_str = f"{fixed_amt:,}원"
         txns.append(Transaction(
@@ -106,7 +97,6 @@ def generate_transactions(
             description="렌트·관리비·통신비 등 고정비"
         ))
 
-        # 변동비
         coef_r = cpi_region.get(location, 1.0)
         for cat in categories:
             for _ in range(cat['avg_count']):
@@ -126,8 +116,7 @@ def generate_transactions(
     txns.sort(key=lambda x: x.date)
     return txns
 
-# ── FastAPI 앱 생성 ──
-app = FastAPI(title="Dummy Spend Generator API")
+app = FastAPI(title="Dummy API")
 
 @app.get("/", include_in_schema=False)
 def root():
