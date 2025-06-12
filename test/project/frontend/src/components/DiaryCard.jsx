@@ -13,9 +13,9 @@ const DiaryCard = () => {
       textAlign: 'center'
     }}>
       <img
-        src="https://cdn-icons-png.flaticon.com/512/4712/4712106.png"
+        src="diary.png"
         alt="감정 캐릭터"
-        style={{ width: '100px', marginBottom: '12px' }}
+        style={{ width: '350px', marginBottom: '12px' }}
       />
       <h3 style={{ marginBottom: '10px' }}>소비 다이어리</h3>
       <p><strong>오늘 나의 소비 감정:</strong></p>

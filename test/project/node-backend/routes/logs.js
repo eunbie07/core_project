@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/logs', async (req, res) => {
   try {
-    const response = await axios.get('http://54.206.43.191:3000/logs', { params: req.query });
+    const response = await axios.get('http://13.237.236.117:3000/logs', { params: req.query });
     res.json(response.data);
   } catch (err) {
     console.error('프록시 /logs 오류:', err.message);

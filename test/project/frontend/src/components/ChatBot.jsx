@@ -1,5 +1,17 @@
 import { useState } from 'react';
 import axios from 'axios';
+import {
+  ChatContainer,
+  ChatHeader,
+  ChatArea,
+  MessageBox,
+  MessageText,
+  MessageMeta,
+  InputArea,
+  Button,
+  DotLoader,
+  NameTag
+} from './ChatStyles';
 
 const ChatBot = () => {
   const [step, setStep] = useState(1);
@@ -8,37 +20,33 @@ const ChatBot = () => {
   const [effect, setEffect] = useState('');
   const [recommendation, setRecommendation] = useState('');
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const user_id = "user_female";
 
-  // 대화 말풍선 추가
-  const addBotMessage = (text) => {
-    setHistory((prev) => [...prev, { role: 'bot', content: text }]);
+  const getTime = () => new Date().toTimeString().slice(0, 5);
+
+  const addMessage = (role, content) => {
+    setHistory((prev) => [...prev, { role, content, time: getTime() }]);
   };
 
-  const addUserMessage = (text) => {
-    setHistory((prev) => [...prev, { role: 'user', content: text }]);
-  };
-
-  // 1단계: 소비 내용 제출
   const handleSubmitSpending = () => {
     if (!spending.trim()) return;
-    addUserMessage(spending);
-    addBotMessage("그 소비를 하신 이유나 기분은 어땠나요?");
+    addMessage('user', spending);
+    addMessage('bot', "그 소비를 하신 이유나 기분은 어땠나요?");
+    setSpending('');
     setStep(2);
   };
 
-  // 2단계: 감정 선택
   const handleSelectEmotion = (e) => {
-    addUserMessage(e);
+    addMessage('user', e);
     setEmotion(e);
-    addBotMessage("그 소비 이후 기분은 어땠나요?");
+    addMessage('bot', "그 소비 이후 기분은 어땠나요?");
     setStep(3);
   };
 
-  // 3단계: 감정 결과 선택
   const handleSelectEffect = async (e) => {
-    addUserMessage(e);
+    addMessage('user', e);
     setEffect(e);
     setStep(4);
 
@@ -49,14 +57,22 @@ const ChatBot = () => {
       이 사용자가 다음엔 감정을 더 건강하게 해소할 수 있도록 따뜻하게 조언해줘.
     `;
 
+    setLoading(true);
+    addMessage('bot', null); // 로딩 중
+
     try {
       const res = await axios.post("http://localhost:8000/api/chat", {
         user_id,
         message: prompt,
       });
+
       const reply = res.data.reply;
       setRecommendation(reply);
-      addBotMessage(reply);
+
+      setHistory((prev) => [
+        ...prev.slice(0, -1),
+        { role: 'bot', content: reply, time: getTime() }
+      ]);
 
       await axios.post("http://localhost:8000/api/log-convo", {
         user_id,
@@ -71,9 +87,14 @@ const ChatBot = () => {
       });
 
     } catch (err) {
-      addBotMessage("GPT 응답 오류가 발생했어요.");
+      setHistory((prev) => [
+        ...prev.slice(0, -1),
+        { role: 'bot', content: "GPT 응답 오류가 발생했어요.", time: getTime() }
+      ]);
       console.error("GPT 오류", err);
     }
+
+    setLoading(false);
   };
 
   const reset = () => {
@@ -83,97 +104,78 @@ const ChatBot = () => {
     setRecommendation('');
     setHistory([]);
     setStep(1);
-    addBotMessage("오늘 어떤 소비를 하셨나요?");
+    addMessage('bot', "오늘 어떤 소비를 하셨나요?");
   };
 
-  // 초기 메시지
   if (history.length === 0 && step === 1) {
-    addBotMessage("오늘 어떤 소비를 하셨나요?");
+    addMessage('bot', "오늘 어떤 소비를 하셨나요?");
   }
 
   return (
-    <div style={{
-      backgroundColor: '#ffffff',
-      borderRadius: '16px',
-      padding: '24px',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-      fontFamily: 'sans-serif',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%'
-    }}>
-      <h3 style={{ marginBottom: '16px', textAlign: 'center' }}>감정 소비 반성 챗봇</h3>
+    <ChatContainer>
+      <ChatHeader>감정 소비 반성 챗봇</ChatHeader>
 
-      <div style={{
-        flexGrow: 1,
-        overflowY: 'auto',
-        padding: '10px',
-        backgroundColor: '#f4f6ff',
-        borderRadius: '12px',
-        marginBottom: '12px',
-        maxHeight: '400px'
-      }}>
+      <ChatArea>
         {history.map((item, idx) => (
-          <div key={idx} style={{
-            display: 'flex',
-            justifyContent: item.role === 'user' ? 'flex-end' : 'flex-start',
-            marginBottom: '8px'
-          }}>
-            <div style={{
-              backgroundColor: item.role === 'user' ? '#d7d0ff' : '#e3f0ff',
-              borderRadius: '16px',
-              padding: '10px 14px',
-              maxWidth: '70%'
-            }}>
-              {item.content}
-            </div>
-          </div>
+          <MessageBox key={idx} align={item.role === 'user' ? 'right' : 'left'}>
+            <NameTag>{item.role === 'user' ? '나' : 'Chatbot'}</NameTag>
+            {item.content !== null ? (
+              <>
+                <MessageText bg={item.role === 'user' ? '#d7d0ff' : '#e3f0ff'}>
+                  {item.content}
+                </MessageText>
+                <MessageMeta>{item.time}</MessageMeta>
+              </>
+            ) : (
+              <DotLoader>
+                <span></span><span></span><span></span>
+              </DotLoader>
+            )}
+          </MessageBox>
         ))}
-      </div>
+      </ChatArea>
 
-      {/* 입력 또는 선택 UI */}
+      {/* STEP 1: 소비 입력 */}
       {step === 1 && (
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <InputArea>
           <input
             value={spending}
             onChange={(e) => setSpending(e.target.value)}
             placeholder="예: 카페, 옷, 배달 등"
-            style={{ flexGrow: 1, padding: '8px 12px', borderRadius: '12px' }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSubmitSpending();
+            }}
+            disabled={loading}
           />
-          <button onClick={handleSubmitSpending}>전송</button>
-        </div>
+          <Button onClick={handleSubmitSpending} disabled={loading}>전송</Button>
+        </InputArea>
       )}
 
+      {/* STEP 2: 감정 선택 */}
       {step === 2 && (
-        <div>
+        <InputArea>
           {["스트레스", "보상심리", "충동", "무기력", "습관"].map((e) => (
-            <button
-              key={e}
-              onClick={() => handleSelectEmotion(e)}
-              style={{ margin: '4px' }}
-            >{e}</button>
+            <Button key={e} onClick={() => handleSelectEmotion(e)} disabled={loading}>{e}</Button>
           ))}
-        </div>
+        </InputArea>
       )}
 
+      {/* STEP 3: 기분 변화 선택 */}
       {step === 3 && (
-        <div>
+        <InputArea>
           {["좋아짐", "변화없음", "더 안좋아짐"].map((e) => (
-            <button
-              key={e}
-              onClick={() => handleSelectEffect(e)}
-              style={{ margin: '4px' }}
-            >{e}</button>
+            <Button key={e} onClick={() => handleSelectEffect(e)} disabled={loading}>{e}</Button>
           ))}
-        </div>
+        </InputArea>
       )}
 
+      {/* STEP 4: 다시 시작 */}
       {step === 4 && recommendation && (
-        <div style={{ marginTop: '10px', textAlign: 'center' }}>
-          <button onClick={reset}>다시 시작하기</button>
-        </div>
+        <InputArea>
+          <Button onClick={reset} disabled={loading}>다시 시작하기</Button>
+        </InputArea>
       )}
-    </div>
+    </ChatContainer>
   );
 };
 

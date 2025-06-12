@@ -1,16 +1,16 @@
 import './styles/main.css';
-import Layout from './components/Layout';
-import ChatBot from './components/ChatBot';
-import EmotionChart from './components/EmotionChart';
-import DiaryCard from './components/DiaryCard';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ChatDetailPage from './pages/ChatDetailPage';
 
 function App() {
   return (
-    <Layout
-      left={<EmotionChart />}
-      center={<ChatBot />}
-      right={<DiaryCard />}
-    />
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/chat" element={<ChatDetailPage />} />
+      </Routes>
+    </Router>
   );
 }
 

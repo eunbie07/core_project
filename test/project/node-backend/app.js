@@ -13,5 +13,5 @@ app.use('/api', logsRouter);      // /api/logs
 app.use('/api', convoRouter);     // /api/log-convo
 
 app.listen(8000, () => {
-  console.log('Node.js API Gateway on http://54.206.43.191:8000');
+  console.log('Node.js API Gateway on http://13.237.236.117:8000');
 });
