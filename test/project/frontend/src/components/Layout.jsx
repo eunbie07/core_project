@@ -2,7 +2,15 @@ import { Link } from 'react-router-dom';
 
 const Layout = ({ left, center, right }) => {
   return (
-    <div style={{ backgroundColor: '#f0f2ff', minHeight: '100vh', fontFamily: '"Apple SD Gothic Neo", sans-serif' }}>
+    <div style={{
+        backgroundColor: '#f0f2ff',
+        minHeight: '100vh',
+        fontFamily: '"Apple SD Gothic Neo", sans-serif',
+        width: '100%',             // ✅ 전체 너비로 확장
+        margin: 0,                 // ✅ 자동 마진 제거
+        padding: 0,                // ✅ 내부 여백 제거
+        overflowX: 'hidden'        // ✅ 수평 스크롤 방지
+      }}>
       
       {/* ✅ 상단 내비게이션 바 */}
       <nav style={{

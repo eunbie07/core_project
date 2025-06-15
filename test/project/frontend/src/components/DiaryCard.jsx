@@ -2,7 +2,7 @@ import React from 'react';
 
 const DiaryCard = () => {
   // 예시 메시지 - 추후 GPT 응답 or 감정 통계와 연동 가능
-  const todayMessage = "기분이 울적할 땐 다른 방법으로 풀어보면 좋을 것 같아...";
+  const todayMessage = "기분이 울적할 땐 다른 방법으로 풀어보면 좋을 것 같아!";
 
   return (
     <div style={{

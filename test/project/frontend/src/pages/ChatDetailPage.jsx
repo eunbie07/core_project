@@ -1,8 +1,9 @@
-import { useState } from 'react'; // 추가
+import { useState } from 'react';
 import ChatBot from '../components/ChatBot';
+import Layout from '../components/Layout';
 
 export default function ChatDetailPage() {
-  const [showFullChat, setShowFullChat] = useState(false); // 상태 추가
+  const [showFullChat, setShowFullChat] = useState(false);
 
   const colors = {
     bodyBackgroundColor: '#F3F6FF',
@@ -15,26 +16,9 @@ export default function ChatDetailPage() {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-      padding: '40px',
-      fontFamily: '"Apple SD Gothic Neo", sans-serif',
-      boxSizing: 'border-box',
-      backgroundColor: colors.bodyBackgroundColor,
-    }}>
-      <div style={{ 
-        maxWidth: '1000px',
-        width: '100%',
-        display: 'flex',
-        gap: '30px',
-      }}>
-        {/* 왼쪽 섹션 */}
-        <div style={{ 
-          flex: 1,
-          minWidth: '350px',
+    <Layout
+      left={
+        <div style={{
           backgroundColor: colors.cardBackgroundColor,
           borderRadius: '15px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
@@ -62,11 +46,10 @@ export default function ChatDetailPage() {
               <li>소비: 커피</li>
               <li>감정: 스트레스</li>
               <li>기분 변화: 변화없음</li>
-              <li>GPT 조언: 산책으로 기분을 환기해보세요.</li>
+              <li>Chatbot 조언: 산책으로 기분을 환기해보세요.</li>
             </ul>
           </div>
 
-          {/* 🔽 버튼 추가 */}
           <button
             style={{
               backgroundColor: colors.primaryAccentColor,
@@ -83,7 +66,6 @@ export default function ChatDetailPage() {
             {showFullChat ? '요약만 보기' : '최근 대화 다시 보기'}
           </button>
 
-          {/* 🔽 전체 대화 표시 영역 */}
           {showFullChat && (
             <div style={{
               marginTop: '15px',
@@ -96,25 +78,22 @@ export default function ChatDetailPage() {
               lineHeight: '1.6',
               whiteSpace: 'pre-wrap'
             }}>
-              <p><strong>GPT:</strong> 오늘 어떤 소비를 하셨나요?</p>
+              <p><strong>Chatbot:</strong> 오늘 어떤 소비를 하셨나요?</p>
               <p><strong>나:</strong> 커피를 마셨어요.</p>
-              <p><strong>GPT:</strong> 당시 기분은 어땠나요?</p>
+              <p><strong>Chatbot:</strong> 당시 기분은 어땠나요?</p>
               <p><strong>나:</strong> 스트레스를 풀려고 마셨어요.</p>
-              <p><strong>GPT:</strong> 산책을 통해 기분을 환기해보는 것도 도움이 될 수 있어요 :)</p>
+              <p><strong>Chatbot:</strong> 산책을 통해 기분을 환기해보는 것도 도움이 될 수 있어요 :)</p>
             </div>
           )}
         </div>
+      }
 
-        {/* 오른쪽 챗봇 섹션 */}
-        <div style={{ 
-          flex: 2,
-          minWidth: '500px',
+      center={
+        <div style={{
           backgroundColor: colors.cardBackgroundColor,
           borderRadius: '15px',
           boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
           padding: '30px',
-          display: 'flex',
-          flexDirection: 'column',
           '--chat-primary-color': colors.primaryAccentColor,
           '--chat-text-color': colors.textColor,
           '--chat-light-text-color': colors.lightTextColor,
@@ -123,7 +102,9 @@ export default function ChatDetailPage() {
         }}>
           <ChatBot />
         </div>
-      </div>
-    </div>
+      }
+
+      right={<div />}
+    />
   );
 }
