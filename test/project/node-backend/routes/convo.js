@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const router = express.Router();
 
-router.post('/log-convo', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const response = await axios.post('http://13.237.236.117:3000/log-convo', req.body); // 도커 환경
     res.json(response.data);

@@ -6,3 +6,4 @@ python-dotenv
 requests
 dotenv
 elevenlabs
+python-multipart

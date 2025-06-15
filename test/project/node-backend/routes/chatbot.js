@@ -1,11 +1,13 @@
+// routes/chatbot.js
 import express from 'express';
 import axios from 'axios';
 
 const router = express.Router();
 
-router.post('/chat', async (req, res) => {
+// 기존: router.post('/chat', ...) ❌
+// 수정: router.post('/', ...) ✅
+router.post('/', async (req, res) => {
   try {
-    // FastAPI 서버 주소를 localhost로 변경
     const response = await axios.post('http://13.237.236.117:3000/chat', req.body);
     res.json(response.data);
   } catch (err) {

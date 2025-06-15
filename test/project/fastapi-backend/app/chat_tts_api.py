@@ -14,9 +14,15 @@ router = APIRouter()
 # API 키 설정
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 ELEVEN_API_KEY = os.getenv("ELEVEN_API_KEY")
-VOICE_ID = "EXAVITQu4vr4xnSDxMaL"  # ElevenLabs 기본 여성 음성
 
-# 키 유효성 확인
+# 한국어에 더 적합한 VOICE_ID를 ElevenLabs Voice Library에서 찾아서 여기에 입력하세요.
+# 예시:
+# VOICE_ID = "21m00Tcm4TlvDq8ikWAM" # 한국어 여성 음성 (ElevenLabs 기본 Voice Library 중 하나)
+# VOICE_ID = "EXAVO3S0K6yihJmXm9mB" # 한국어 남성 음성 (ElevenLabs 기본 Voice Library 중 하나)
+# VOICE_ID = "YOUR_KOREAN_VOICE_ID_HERE" # 실제 사용하실 VOICE_ID로 변경 필요
+VOICE_ID = "uyVNoMrnUku1dZyVEXwD" # 임시 한국어 여성 Voice ID (ElevenLabs 기본 샘플 중 하나)
+
+# 키 유효성 확인 (실제 배포 시에는 로깅 레벨 조정)
 print("✅ ELEVEN_API_KEY 로드됨:", bool(ELEVEN_API_KEY))
 
 # 요청/응답 모델 정의
@@ -51,7 +57,9 @@ def chat_with_gpt(req: ChatRequest):
         reply = response.choices[0].message.content
         return ChatResponse(reply=reply)
     except Exception as e:
-        return ChatResponse(reply=f"GPT 호출 중 오류가 발생했습니다: {str(e)}")
+        # 오류 메시지를 사용자에게 직접 보여주기보다는 내부 로깅 후 일반적인 메시지 반환 권장
+        print(f"GPT 호출 중 오류 발생: {e}")
+        return ChatResponse(reply=f"죄송합니다, 현재 답변을 드릴 수 없습니다. 잠시 후 다시 시도해주세요.")
 
 
 # GPT + TTS 동시 처리
@@ -79,10 +87,13 @@ def chat_with_gpt_and_tts(req: ChatRequest):
         reply = response.choices[0].message.content.strip()
         print("🧠 GPT 응답:", reply)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"GPT 호출 실패: {str(e)}")
+        print(f"GPT 호출 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"GPT 응답 생성에 실패했습니다. {str(e)}")
 
     # 2. TTS 요청 준비
-    if len(reply) > 4900:
+    # ElevenLabs API는 텍스트 길이에 제한이 있습니다 (무료 플랜 기준 약 5000자, 유료 플랜은 더 길어짐)
+    # 현재 코드는 4900자로 잘라내지만, 실제 제한에 맞춰 조정하는 것이 좋습니다.
+    if len(reply) > 4900: # 5000자 제한을 고려하여 안전하게 4900자로 설정
         reply = reply[:4900]
         print("✂ 응답이 너무 길어 잘라냄")
 
@@ -94,10 +105,13 @@ def chat_with_gpt_and_tts(req: ChatRequest):
     }
     tts_payload = {
         "text": reply,
-        "model_id": "eleven_monolingual_v1",
+        # eleven_monolingual_v1 대신 eleven_multilingual_v2 사용
+        "model_id": "eleven_multilingual_v2", # <-- 한국어 지원에 더 적합한 모델로 변경
         "voice_settings": {
             "stability": 0.7,
             "similarity_boost": 0.7
+            # "style": 0.5, # eleven_v3에서 사용 가능한 설정 (감정 표현)
+            # "use_speaker_boost": True # eleven_v3에서 사용 가능한 설정
         }
     }
 
@@ -108,11 +122,13 @@ def chat_with_gpt_and_tts(req: ChatRequest):
 
         if tts_response.status_code != 200:
             print("❌ TTS 응답 오류:", tts_response.text)
-            raise Exception(f"TTS 오류 응답: {tts_response.text}")
+            raise Exception(f"ElevenLabs TTS 오류: {tts_response.status_code} - {tts_response.text}")
 
         # 4. mp3 파일 StreamingResponse로 반환
         audio_stream = BytesIO(tts_response.content)
         return StreamingResponse(audio_stream, media_type="audio/mpeg")
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"TTS 생성 실패: {str(e)}")
+        print(f"TTS 생성 실패: {e}")
+        raise HTTPException(status_code=500, detail=f"음성 생성에 실패했습니다. {str(e)}")
+

@@ -40,6 +40,9 @@ const Layout = ({ left, center, right }) => {
             <li>
               <Link to="/diary" style={{ textDecoration: 'none', fontSize: '20px', color: '#666' }}>Diary</Link>
             </li>
+            <li>
+              <Link to="/budget" style={{ textDecoration: 'none', fontSize: '20px', color: '#666' }}>Budget</Link>
+            </li>
           </ul>
         </div>
       </nav>

@@ -29,7 +29,7 @@ def chat_with_gpt(req: ChatRequest):
         },
         {
             "role": "user",
-            "content": f"{message}\n\n세 문장 이내로 따뜻하게 말하면서 명확한 감정 해소 대안을 제시해줘."
+            "content": f"{message}\n\n한 문장 이내로 따뜻하게 말하면서 명확한 감정 해소 대안을 제시해줘."
         }
     ]
 

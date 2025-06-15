@@ -99,3 +99,42 @@ export const DotLoader = styled.div`
   span:nth-child(2) { animation-delay: 0.2s; }
   span:nth-child(3) { animation-delay: 0.4s; }
 `;
+
+const bounce = keyframes`
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`;
+
+export const SpeakingIndicator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6px;
+
+  span {
+    background-color: #6c91ff;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px;
+    border-radius: 50%;
+    display: inline-block;
+    animation: ${bounce} 1.4s infinite ease-in-out both;
+  }
+
+  span:nth-child(1) { animation-delay: -0.32s; }
+  span:nth-child(2) { animation-delay: -0.16s; }
+  span:nth-child(3) { animation-delay: 0; }
+`;
+
+export const SpeakingText = styled.div`
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+`;

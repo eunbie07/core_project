@@ -1,4 +1,6 @@
-import { useState } from 'react';
+// 📍 ChatBot.jsx (STT: 실시간 녹음 → Whisper 전송)
+
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
   ChatContainer,
@@ -10,7 +12,9 @@ import {
   InputArea,
   Button,
   DotLoader,
-  NameTag
+  NameTag,
+  SpeakingIndicator,
+  SpeakingText
 } from './ChatStyles';
 
 const ChatBot = () => {
@@ -21,9 +25,13 @@ const ChatBot = () => {
   const [recommendation, setRecommendation] = useState('');
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
 
   const user_id = "user_female";
-
   const getTime = () => new Date().toTimeString().slice(0, 5);
 
   const addMessage = (role, content) => {
@@ -58,7 +66,7 @@ const ChatBot = () => {
     `;
 
     setLoading(true);
-    addMessage('bot', null); // 로딩 중
+    addMessage('bot', null);
 
     try {
       const res = await axios.post("http://localhost:8000/api/chat", {
@@ -86,12 +94,24 @@ const ChatBot = () => {
         ]
       });
 
+      const ttsRes = await fetch("http://localhost:8000/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id, message: reply })
+      });
+
+      const blob = await ttsRes.blob();
+      const audio = new Audio(URL.createObjectURL(blob));
+      setIsSpeaking(true);
+      audio.play();
+      audio.onended = () => setIsSpeaking(false);
+
     } catch (err) {
+      console.error("GPT 오류:", err);
       setHistory((prev) => [
         ...prev.slice(0, -1),
         { role: 'bot', content: "GPT 응답 오류가 발생했어요.", time: getTime() }
       ]);
-      console.error("GPT 오류", err);
     }
 
     setLoading(false);
@@ -102,14 +122,48 @@ const ChatBot = () => {
     setEmotion('');
     setEffect('');
     setRecommendation('');
-    setHistory([]);
+    setHistory([{ role: 'bot', content: "오늘 어떤 소비를 하셨나요?", time: getTime() }]);
     setStep(1);
-    addMessage('bot', "오늘 어떤 소비를 하셨나요?");
   };
 
-  if (history.length === 0 && step === 1) {
-    addMessage('bot', "오늘 어떤 소비를 하셨나요?");
-  }
+  useEffect(() => {
+    reset();
+  }, []);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      recordedChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        if (e.data.size > 0) recordedChunksRef.current.push(e.data);
+      };
+
+      mediaRecorderRef.current.onstop = async () => {
+        const blob = new Blob(recordedChunksRef.current, { type: 'audio/webm' });
+        const formData = new FormData();
+        formData.append('file', blob, 'recording.webm');
+
+        try {
+          const res = await axios.post("http://localhost:8000/api/stt", formData);
+          setSpending(res.data.text);
+        } catch (err) {
+          console.error("STT 오류:", err);
+        }
+      };
+
+      mediaRecorderRef.current.start();
+      setIsRecording(true);
+    } catch (err) {
+      alert("마이크 접근이 거부되었습니다. 마이크 권한을 확인해주세요.");
+    }
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop();
+    setIsRecording(false);
+  };
 
   return (
     <ChatContainer>
@@ -127,31 +181,38 @@ const ChatBot = () => {
                 <MessageMeta>{item.time}</MessageMeta>
               </>
             ) : (
-              <DotLoader>
-                <span></span><span></span><span></span>
-              </DotLoader>
+              <DotLoader><span></span><span></span><span></span></DotLoader>
             )}
           </MessageBox>
         ))}
       </ChatArea>
 
-      {/* STEP 1: 소비 입력 */}
+      {isSpeaking && (
+        <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+          <SpeakingIndicator><span></span><span></span><span></span></SpeakingIndicator>
+          <SpeakingText>챗봇이 말하고 있어요...</SpeakingText>
+        </div>
+      )}
+
       {step === 1 && (
         <InputArea>
           <input
             value={spending}
             onChange={(e) => setSpending(e.target.value)}
             placeholder="예: 카페, 옷, 배달 등"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSubmitSpending();
-            }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSubmitSpending()}
             disabled={loading}
           />
           <Button onClick={handleSubmitSpending} disabled={loading}>전송</Button>
+          <Button
+            onClick={isRecording ? stopRecording : startRecording}
+            disabled={loading}
+          >
+            {isRecording ? "🛑 멈추기" : "🎙️ 녹음하기"}
+          </Button>
         </InputArea>
       )}
 
-      {/* STEP 2: 감정 선택 */}
       {step === 2 && (
         <InputArea>
           {["스트레스", "보상심리", "충동", "무기력", "습관"].map((e) => (
@@ -160,7 +221,6 @@ const ChatBot = () => {
         </InputArea>
       )}
 
-      {/* STEP 3: 기분 변화 선택 */}
       {step === 3 && (
         <InputArea>
           {["좋아짐", "변화없음", "더 안좋아짐"].map((e) => (
@@ -169,7 +229,6 @@ const ChatBot = () => {
         </InputArea>
       )}
 
-      {/* STEP 4: 다시 시작 */}
       {step === 4 && recommendation && (
         <InputArea>
           <Button onClick={reset} disabled={loading}>다시 시작하기</Button>
