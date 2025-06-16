@@ -1,9 +1,8 @@
-// routes/stt.js
-import express from 'express';
-import axios from 'axios';
-import multer from 'multer';
-import FormData from 'form-data';
-import fs from 'fs';
+const express = require('express');
+const axios = require('axios');
+const multer = require('multer');
+const FormData = require('form-data');
+const fs = require('fs');
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' }); // 임시 저장 폴더
@@ -18,7 +17,7 @@ router.post('/', upload.single('file'), async (req, res) => {
       contentType: req.file.mimetype
     });
 
-    const response = await axios.post('http://localhost:3000/api/stt', form, {
+    const response = await axios.post('http://13.237.236.117:3000/stt', form, {
       headers: form.getHeaders()
     });
 
@@ -31,4 +30,4 @@ router.post('/', upload.single('file'), async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

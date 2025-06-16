@@ -9,15 +9,16 @@ import json
 load_dotenv()
 router = APIRouter()
 
-# OpenAI API
+# OpenAI API 클라이언트 설정
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# MongoDB 연결
-mongo = MongoClient("mongodb://localhost:27017")
+# MongoDB 연결 (외부 IP 사용 시 방화벽 허용 여부 확인)
+mongo = MongoClient("mongodb://13.237.236.117:27017")
 collection = mongo.spending_db.spending_logs
 
 @router.get("/coach/{user_id}")
 def get_coaching(user_id: str):
+    # MongoDB에서 사용자 소비 데이터 조회
     doc = collection.find_one({"user_id": user_id}, sort=[("month", -1)])
     if not doc:
         return {"error": "소비 데이터가 없습니다."}
@@ -33,8 +34,9 @@ def get_coaching(user_id: str):
     ]
     summary_text = "\n".join(summary_lines)
 
+    # 프롬프트 구성
     prompt = f"""
-아래는 사용자의 월별 소비 내역입니다:
+아래는 사용자의 월별 소비 내역입니다.
 
 - 월: {month}
 - 총 수입: {total_income}원
@@ -43,7 +45,8 @@ def get_coaching(user_id: str):
 [상세 내역]
 {summary_text}
 
-다음 JSON 형식만 출력해줘. **설명 문장 없이 JSON만 출력**해야 해.
+이 정보를 바탕으로 아래 JSON 구조로 예산안을 추천해 주세요.
+**설명 없이 아래 구조만 그대로 출력**하세요:
 
 예시:
 {{
@@ -62,24 +65,32 @@ def get_coaching(user_id: str):
 """
 
     try:
+        # GPT 호출 (response_format 제거)
         response = client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4-turbo",
             messages=[
-                {"role": "system", "content": "너는 소비 코치이며, JSON 형식으로 예산안을 제공해야 해."},
-                {"role": "user", "content": prompt}
+                {
+                    "role": "system",
+                    "content": "너는 소비 코치야. 반드시 설명 없이 JSON 형식만 출력해야 해."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
             ]
         )
-        raw_content = response.choices[0].message.content.strip()
-        print("GPT 응답 내용:\n", raw_content)  # ✅ 로그 확인용
 
-        # JSON 파싱 시도
-        data = json.loads(raw_content)
-        return JSONResponse(content=data)
+        # 문자열 응답을 직접 파싱
+        raw_content = response.choices[0].message.content.strip()
+        print("GPT 응답 내용:\n", raw_content)
+
+        parsed = json.loads(raw_content)
+        if not all(k in parsed for k in ("budgets", "saving_goal", "tips")):
+            return {"error": "GPT 응답이 예상한 JSON 형식이 아닙니다.", "raw": raw_content}
+
+        return JSONResponse(content=parsed)
 
     except json.JSONDecodeError:
-        return {
-            "error": "GPT 응답이 JSON 형식이 아닙니다.",
-            "raw": raw_content  # 확인을 위해 응답 원문도 같이 보냄
-        }
+        return {"error": "GPT 응답이 JSON 형식이 아닙니다. (파싱 실패)", "raw": raw_content}
     except Exception as e:
         return {"error": f"GPT 호출 중 오류 발생: {str(e)}"}

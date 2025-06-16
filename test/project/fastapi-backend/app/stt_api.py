@@ -9,7 +9,7 @@ load_dotenv()
 router = APIRouter()
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-@router.post("/api/stt")
+@router.post("/stt")
 async def transcribe_audio(file: UploadFile = File(...)):
     try:
         audio_data = await file.read()

@@ -1,5 +1,5 @@
-import express from 'express';
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
 
 const router = express.Router();
 
@@ -14,4 +14,4 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router; // ✅ CommonJS 방식

@@ -1,25 +1,47 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BudgetComparisonChart from './BudgetComparisonChart';
+import getOverBudgetSummary from '../utils/getOverBudgetSummary';
 
-function BudgetCoach({ userId = "user_male" }) {
+function BudgetCoach({ userId = "user_male", onResult }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [actuals, setActuals] = useState({});
+  const [summaryMessage, setSummaryMessage] = useState('');
 
   const getCoaching = async () => {
     setLoading(true);
-    setData(null);
     setError('');
+    setData(null);
+    setActuals({});
+    setSummaryMessage('');
+
     try {
       const res = await axios.get(`http://13.237.236.117:8000/api/coach/${userId}`);
       if (res.data.error) {
         setError(res.data.error);
-      } else {
-        setData(res.data); // { budgets, saving_goal, tips }
+        return;
       }
+      setData(res.data);
+
+      const actualRes = await axios.get(`http://13.237.236.117:8000/api/actuals/${userId}`);
+      const actualData = actualRes.data.actuals || {};
+      setActuals(actualData);
+
+      // ✅ 요약 메시지 생성
+      const summary = getOverBudgetSummary(res.data.budgets, actualData);
+      setSummaryMessage(summary);
+
+      // ✅ 부모 컴포넌트로 전달
+      onResult?.({
+        saving_goal: res.data.saving_goal,
+        tips: res.data.tips
+      });
+
     } catch (err) {
-      setError("AI 코치를 불러오는 중 오류가 발생했어요.");
       console.error(err);
+      setError("AI 코치를 불러오는 중 오류가 발생했어요.");
     } finally {
       setLoading(false);
     }
@@ -33,44 +55,47 @@ function BudgetCoach({ userId = "user_male" }) {
         onClick={getCoaching}
         disabled={loading}
         className={`w-full px-4 py-2 mb-4 rounded font-semibold transition-colors 
-          ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
+          ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-yellow-400 hover:bg-yellow-500 text-black"}`}
       >
-        {loading ? "소비 분석 중입니다..." : "소비 습관 분석 받기"}
+        {loading ? (
+          <span className="animate-pulse">분석 중...</span>
+        ) : (
+          "소비 습관 분석 받기"
+        )}
       </button>
 
-      {error && (
-        <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
-      )}
+      {error && <div className="text-red-500 text-sm text-center mt-2">{error}</div>}
 
-      {data && (
+      {data && !error && (
         <div className="space-y-6 mt-6">
+
+          {/* 예산안 */}
           {data.budgets && (
             <div className="bg-gray-50 p-4 rounded shadow">
               <h3 className="font-bold mb-2">📦 카테고리별 예산안</h3>
-              <ul className="text-sm">
+              <ul className="text-sm grid grid-cols-2 gap-x-6 gap-y-1">
                 {Object.entries(data.budgets).map(([category, amount]) => (
-                  <li key={category}>• {category}: {amount.toLocaleString()}원 이하</li>
+                  <li key={category}> {category}: {amount.toLocaleString()}원 </li>
                 ))}
               </ul>
             </div>
           )}
 
-          {"saving_goal" in data && (
-            <div className="bg-green-100 p-4 rounded shadow">
-              <h3 className="font-bold mb-2">🏦 저축 목표</h3>
-              <p className="text-sm">{data.saving_goal.toLocaleString()}원 이상 저축해보세요.</p>
+          {/* 요약 메시지 */}
+          {summaryMessage && (
+            <div className="mt-4 text-center text-sm font-semibold text-green-700 bg-green-100 border border-green-300 p-3 rounded shadow-sm">
+              {summaryMessage}
             </div>
           )}
 
-          {Array.isArray(data.tips) && (
-            <div className="bg-yellow-100 p-4 rounded shadow">
-              <h3 className="font-bold mb-2">🎯 절약 팁</h3>
-              <ul className="list-disc pl-5 text-sm space-y-1">
-                {data.tips.map((tip, i) => (
-                  <li key={i}>{tip}</li>
-                ))}
-              </ul>
-            </div>
+          {/* 예산 vs 실제 소비 차트 */}
+          {data.budgets && (
+            <>
+              <h3 className="text-lg font-bold mt-4 text-center border-b pb-1">
+                📊 예산 vs 실제 소비
+              </h3>
+              <BudgetComparisonChart budgets={data.budgets} actuals={actuals} />
+            </>
           )}
         </div>
       )}

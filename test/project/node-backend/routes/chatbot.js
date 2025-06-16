@@ -1,14 +1,12 @@
-// routes/chatbot.js
-import express from 'express';
-import axios from 'axios';
+const express = require('express');
+const axios = require('axios');
 
 const router = express.Router();
 
-// 기존: router.post('/chat', ...) ❌
-// 수정: router.post('/', ...) ✅
 router.post('/', async (req, res) => {
   try {
     const response = await axios.post('http://13.237.236.117:3000/chat', req.body);
+    console.log('🟣 /api/chat 요청 도착:', req.body);
     res.json(response.data);
   } catch (err) {
     console.error('FastAPI 프록시 오류:', err.message);
@@ -16,4 +14,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router; // ✅ CommonJS 방식
