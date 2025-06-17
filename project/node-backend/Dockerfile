@@ -14,4 +14,4 @@ COPY . .
 EXPOSE 8000
 
 # 개발 환경을 위한 CMD 명령어: package.json에 정의된 'dev' 스크립트를 실행합니다.
-CMD ["npm", "run", "dev"]
+CMD ["node", "app.js"]
